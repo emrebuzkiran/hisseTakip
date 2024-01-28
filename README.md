@@ -2,6 +2,10 @@
 
 Bu uygulama, kullanıcılara borsa portföylerini takip etme ve yönetme imkanı sunan bir web uygulamasıdır.
 
-#VeriTabanı
+# Proje Tasarımı
+![image](https://github.com/emrebuzkiran/portfoyum/assets/67521326/bfbc2796-4f03-4e24-88f2-f1ec9a05c833)
 
-![image](https://github.com/emrebuzkiran/hisseTakip/assets/67521326/0f8bbdb9-04e7-4c00-ba11-e31a8029188d)
+![image](https://github.com/emrebuzkiran/portfoyum/assets/67521326/4ad24dde-caf3-40c0-af67-08dfa62737a3)
+
+
+
