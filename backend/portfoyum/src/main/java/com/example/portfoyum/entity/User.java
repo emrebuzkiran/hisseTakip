@@ -13,14 +13,9 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
-
     private String ad;
-
     private String soyad;
-
     private String email;
-
     private String sifre;
 
 }
