@@ -1,5 +1,5 @@
 # Borsa Portföy Takip Uygulaması
-##test
+
 
 Bu uygulama, kullanıcılara borsa portföylerini takip etme ve yönetme imkanı sunan bir web uygulamasıdır.
 
