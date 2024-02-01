@@ -36,6 +36,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
+    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<String> authenticateUser(@RequestBody LoginDTO loginDTO) {
         try {
             logger.info(loginDTO.getEmail());
