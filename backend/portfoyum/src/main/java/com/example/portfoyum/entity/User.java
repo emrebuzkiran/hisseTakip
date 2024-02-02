@@ -9,7 +9,6 @@ import lombok.Setter;
 @Setter
 @Table(name = "kullanicilar")
 public class User {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;

@@ -29,7 +29,7 @@ export default function Login() {
         draggable: true,
         progress: undefined,
       });
-      window.location.href = "/dashboard";   
+        
         
     } catch (error) {
       console.error("Login error", error);
@@ -104,6 +104,7 @@ export default function Login() {
           </Link>
         </p>
       </div>
+      <Link href="/dashboard">Dashboard</Link>
     </main>
   );
 }
