@@ -1,6 +1,6 @@
 package com.example.portfoyum;
 
-import com.example.portfoyum.controller.UserController;
+import com.example.portfoyum.controller.AuthController;
 import com.example.portfoyum.dto.LoginDTO;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -24,7 +24,7 @@ public class LoginControllerTest {
     AuthenticationManager authenticationManager;
 
     @InjectMocks
-    UserController userController;
+    AuthController authContoller;
 
     @Test
     void testAuthenticateUser() {
@@ -35,7 +35,7 @@ public class LoginControllerTest {
         loginDTO.setEmail("test@test");
         loginDTO.setSifre("test");
 
-        ResponseEntity<String> responseEntity = userController.authenticateUser(loginDTO);
+        ResponseEntity<String> responseEntity = authContoller.authenticateUser(loginDTO);
 
         assertNotNull(responseEntity);
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
@@ -53,7 +53,7 @@ public class LoginControllerTest {
         loginDTO.setSifre("invalidPassword");
 
         // Calling the method
-        ResponseEntity<String> responseEntity = userController.authenticateUser(loginDTO);
+        ResponseEntity<String> responseEntity = authContoller.authenticateUser(loginDTO);
 
         // Assertions
         assertNotNull(responseEntity);
