@@ -2,6 +2,7 @@ package com.example.portfoyum.controller;
 
 import com.example.portfoyum.dto.LoginDTO;
 import com.example.portfoyum.dto.SignupDTO;
+import com.example.portfoyum.dto.UserDTO;
 import com.example.portfoyum.entity.User;
 import com.example.portfoyum.service.GenerateTokenService;
 import com.example.portfoyum.service.JwtService;
@@ -32,7 +33,6 @@ public class AuthController {
         this.jwtService = jwtService;
     }
 
-    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @GetMapping("/test")
     public ResponseEntity<String> hello() {
@@ -45,13 +45,16 @@ public class AuthController {
         try {
             return generateTokenService.generateToken(loginDTO);
         } catch (Exception e) {
-            return "Invalid credentials" +loginDTO.username()+loginDTO.password();
+            log.error("error in generating token " + e.getMessage());
+            return "error in generating token";
         }
+
     }
     @PostMapping("/register")
     @CrossOrigin(origins = "http://localhost:3000")
     public User addUser(@RequestBody SignupDTO signupDTO){
         return service.createUser(signupDTO);
     }
+
 
 }

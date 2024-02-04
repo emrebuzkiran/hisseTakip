@@ -21,14 +21,14 @@ public class JwtService {
     @Value("${jwt.key}")
     private String SECRET;
 
-    public String generateToken(String username){
+    public String generateToken(String userName){
         Map<String, Objects> claims = new HashMap<>();
-        return createToken(claims, username);
+        return createToken(claims, userName);
     }
-    private String createToken(Map<String, Objects> claims, String username) {
+    private String createToken(Map<String, Objects> claims, String userName) {
         return Jwts.builder()
                 .setClaims(claims)
-                .setSubject(username)
+                .setSubject(userName)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 30))
                 .signWith(getSignKey(), SignatureAlgorithm.HS256)

@@ -4,32 +4,41 @@ import { useEffect, useState } from "react";
 
 export default function Dashboard() {
   const [userInfo, setUserInfo] = useState(null);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch("http://localhost:8080/api/user/userinfo")
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Failed to fetch user information");
-        }
-        return response.json();
-      })
-      .then((data) => setUserInfo(data))
-      .catch((error) => setError(error.message));
+    // Token'i localStorage'den al
+    const token = localStorage.getItem("token");
+
+    if (token) {
+      axios
+        .get("http://localhost:8080/api/user", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((response) => {
+          setUserInfo(response.data);
+        })
+        .catch((error) => {
+          console.error(
+            "Kullanıcı bilgileri alınamadı. Token geçersiz olabilir."
+          );
+          console.error(error);
+        });
+    }
   }, []);
 
   return (
     <main className="min-h-screen flex items-center justify-center">
+      <h1>Dashboard</h1>
       {userInfo ? (
         <div>
-          <h1>{userInfo.ad}</h1>
-          <p>{userInfo.email}</p>
-          {/* Diğer kullanıcı detaylarını buraya ekleyebilirsiniz */}
+          <p>Name: {userInfo.username}</p>
+          <p>Email: {userInfo.email}</p>
+          {/* Diğer kullanıcı bilgilerini buraya ekleyebilirsin */}
         </div>
-      ) : error ? (
-        <p>{error}</p>
       ) : (
-        <Link href="/login">Login</Link>
+        <p>Kullanıcı bilgileri yükleniyor...</p>
       )}
     </main>
   );

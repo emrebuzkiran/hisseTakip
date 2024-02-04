@@ -9,7 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 export default function Login() {
 
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSubmit = async (e) => {
@@ -17,9 +17,13 @@ export default function Login() {
 
     try {
       const response = await axios.post("http://localhost:8080/api/auth/login", {
-        email: email,
-        sifre: password,
+        username: username,
+        password: password,
       });
+
+      const token = response.data.token;
+      localStorage.setItem("token", token);
+
       toast.success("Başarılı Giriş!", {
         position: "top-right",
         autoClose: 5000,
@@ -62,12 +66,12 @@ export default function Login() {
             </label>
             <input
               type="text"
-              id="email"
-              name="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              id="username"
+              name="username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
               className="w-full px-4 py-2 border rounded focus:outline-none focus:border-blue-500"
-              placeholder="Your email"
+              placeholder="Your username"
               required
             />
           </div>

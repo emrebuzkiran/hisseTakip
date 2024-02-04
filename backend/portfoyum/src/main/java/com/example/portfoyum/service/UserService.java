@@ -1,21 +1,18 @@
 package com.example.portfoyum.service;
 
+
 import com.example.portfoyum.dto.SignupDTO;
+import com.example.portfoyum.dto.UserDTO;
 import com.example.portfoyum.entity.User;
 import com.example.portfoyum.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -32,11 +29,16 @@ public class UserService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
         Optional<User> user = userRepository.findByUsername(username);
-        return (UserDetails) user.orElseThrow(EntityNotFoundException::new);
+        return user.orElseThrow(EntityNotFoundException::new);
     }
 
     public Optional<User> getByUsername(String username) {
         return userRepository.findByUsername(username);
+    }
+
+    public UserDTO getUserInfo(String username) {
+        Optional<User> user = userRepository.findByUsername(username);
+        return user.map(UserDTO::from).orElse(null);
     }
 
     public User createUser(SignupDTO request) {

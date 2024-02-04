@@ -7,7 +7,6 @@ import axios from "axios";
 
 export default function Register() {
   const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -29,10 +28,11 @@ export default function Register() {
       const response = await axios.post(
         "http://localhost:8080/api/auth/register",
         {
-          ad: firstName,
-          soyad: lastName,
+          name: firstName,
+          username: lastName,
           email: email,
-          sifre: password,
+          password: password,
+          authorities: ["ROLE_USER"],
         }
       );
       toast.success("Registration successful!");
@@ -74,12 +74,12 @@ export default function Register() {
             </label>
             <input
               type="text"
-              id="lastName"
-              name="lastName"
-              value={lastName}
+              id="username"
+              name="username"
+              value={username}
               onChange={(e) => setLastName(e.target.value)}
               className="w-full px-4 py-2 border rounded focus:outline-none focus:border-blue-500"
-              placeholder="Your last name"
+              placeholder="Your username"
               required
             />
           </div>
