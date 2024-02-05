@@ -1,22 +1,27 @@
 "use client";
 import Link from "next/link";
+import { jwtDecode } from "jwt-decode";
+import axios from "axios";
 import { useEffect, useState } from "react";
 
 export default function Dashboard() {
   const [userInfo, setUserInfo] = useState(null);
 
   useEffect(() => {
-    // Token'i localStorage'den al
-    const token = localStorage.getItem("token");
-
+    let rawToken = document.cookie;
+    let token = rawToken.substring("jwt=".length);
+    const decoded = jwtDecode(token);
+    const username = decoded.sub;
+    
     if (token) {
       axios
-        .get("http://localhost:8080/api/user", {
+        .get(`http://localhost:8080/api/user/${username}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         })
         .then((response) => {
+          
           setUserInfo(response.data);
         })
         .catch((error) => {
@@ -32,7 +37,7 @@ export default function Dashboard() {
     <main className="min-h-screen flex items-center justify-center">
       <h1>Dashboard</h1>
       {userInfo ? (
-        <div>
+        <div className=""> 
           <p>Name: {userInfo.username}</p>
           <p>Email: {userInfo.email}</p>
           {/* Diğer kullanıcı bilgilerini buraya ekleyebilirsin */}

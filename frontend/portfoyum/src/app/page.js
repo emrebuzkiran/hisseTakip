@@ -69,13 +69,13 @@ export default function Home() {
           <div className="flex space-x-4 mt-5">
             <Link
               className="bg-white text-black px-4 py-2 rounded-lg transition duration-300 hover:text-white hover:bg-black"
-              href="/login"
+              href="/auth/login"
             >
               Login
             </Link>
             <Link
               className="bg-black-500 text-white px-4 py-2 rounded-lg  transition duration-300 hover:text-black hover:bg-white"
-              href="/about"
+              href="/pages/about"
             >
               About
             </Link>

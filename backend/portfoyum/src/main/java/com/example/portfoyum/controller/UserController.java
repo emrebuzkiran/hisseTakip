@@ -28,6 +28,7 @@ public class UserController {
     }
 
     @GetMapping("/{username}")
+    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<UserDTO> getUserInfo(@PathVariable String username) {
             try {
                 UserDTO userDTO = service.getUserInfo(username);

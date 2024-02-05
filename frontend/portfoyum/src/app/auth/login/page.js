@@ -2,15 +2,17 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Cookies from "js-cookie";
 
 export default function Login() {
-
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const router = useRouter();
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -21,8 +23,8 @@ export default function Login() {
         password: password,
       });
 
-      const token = response.data.token;
-      localStorage.setItem("token", token);
+      const token = response.data;
+      document.cookie = `jwt=${token}`;
 
       toast.success("Başarılı Giriş!", {
         position: "top-right",
@@ -33,11 +35,11 @@ export default function Login() {
         draggable: true,
         progress: undefined,
       });
-        
+      window.location.href = "/pages/dashboard";
+     
         
     } catch (error) {
       console.error("Login error", error);
-      console.log(email, password);
       toast.error("Başarısız Giriş!", {
         position: "top-right",
         autoClose: 5000,
@@ -59,10 +61,10 @@ export default function Login() {
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label
-              htmlFor="email"
+              htmlFor="username"
               className="block text-gray-700 text-sm font-bold mb-2"
             >
-              Email
+              Username
             </label>
             <input
               type="text"
@@ -108,7 +110,6 @@ export default function Login() {
           </Link>
         </p>
       </div>
-      <Link href="/dashboard">Dashboard</Link>
     </main>
   );
 }
