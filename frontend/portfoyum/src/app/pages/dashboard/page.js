@@ -15,7 +15,7 @@ export default function Dashboard() {
     
     const expirationDate = decoded.exp;
     const username = decoded.sub;
-    console.log("decoded", decoded);
+    
 
 
     if (currentTimestamp > expirationDate) {
