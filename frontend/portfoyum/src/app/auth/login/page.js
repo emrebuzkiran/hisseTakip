@@ -21,37 +21,39 @@ export default function Login() {
       const response = await axios.post("http://localhost:8080/api/auth/login", {
         username: username,
         password: password,
+
       });
 
       const token = response.data;
       document.cookie = `jwt=${token}`;
-
-      toast.success("Başarılı Giriş!", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
-      window.location.href = "/pages/dashboard";
-     
-        
+      showSuccessToast("Başarıyla giriş yaptınız");    
+      
+      router.push("/pages/dashboard");
     } catch (error) {
       console.error("Login error", error);
-      toast.error("Başarısız Giriş!", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
-      // İsteğe bağlı olarak kullanıcıya bir hata mesajı gösterebilirsiniz.
+      showErrorToast("Kullanıcı adı veya şifre hatalı");
     }
   };
+
+
+  function showSuccessToast(message) {
+    showToast(message, "success");
+  }
+
+  function showErrorToast(message) {
+    showToast(message, "error");
+  }
+  function showToast(message, type) {
+    toast[type](message, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  }
 
   return (
     <main className="min-h-screen flex items-center justify-center">

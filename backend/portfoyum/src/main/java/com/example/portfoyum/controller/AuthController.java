@@ -46,10 +46,10 @@ public class AuthController {
             return generateTokenService.generateToken(loginDTO);
         } catch (Exception e) {
             log.error("error in generating token " + e.getMessage());
-            return "error in generating token";
+            throw new RuntimeException("Authentication failed");
         }
-
     }
+
     @PostMapping("/register")
     @CrossOrigin(origins = "http://localhost:3000")
     public User addUser(@RequestBody SignupDTO signupDTO){

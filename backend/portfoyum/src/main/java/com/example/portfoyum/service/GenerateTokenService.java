@@ -2,6 +2,8 @@ package com.example.portfoyum.service;
 
 import com.example.portfoyum.dto.LoginDTO;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -20,11 +22,17 @@ public class GenerateTokenService {
     }
 
     public String generateToken(LoginDTO loginDTO) {
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDTO.username(), loginDTO.password()));
-        if (authentication.isAuthenticated()) {
-            return jwtService.generateToken(loginDTO.username());
-        }
+        try {
+            Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDTO.username(), loginDTO.password()));
+            if (authentication.isAuthenticated()) {
 
-        throw new UsernameNotFoundException("invalid username {} " + loginDTO.username());
+                return jwtService.generateToken(loginDTO.username());
+            } else {
+                throw new UsernameNotFoundException("Invalid credentials for user: " + loginDTO.username());
+            }
+        } catch (Exception e) {
+
+            throw new RuntimeException("Authentication failed");
+        }
     }
 }
