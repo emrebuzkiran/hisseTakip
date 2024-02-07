@@ -1,8 +1,11 @@
 "use client";
+
 import Link from "next/link";
 import { jwtDecode } from "jwt-decode";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { Sidebar, Menu, MenuItem, SubMenu } from "react-pro-sidebar";
+
 
 export default function Dashboard() {
   const [userInfo, setUserInfo] = useState(null);
@@ -44,17 +47,8 @@ export default function Dashboard() {
   }, []);
 
   return (
-    <main className="min-h-screen flex items-center justify-center">
-      <h1>Dashboard</h1>
-      {userInfo ? (
-        <div className="">
-          <p>Name: {userInfo.username}</p>
-          <p>Email: {userInfo.email}</p>
-          {/* Diğer kullanıcı bilgilerini buraya ekleyebilirsin */}
-        </div>
-      ) : (
-        <p>Kullanıcı bilgileri yükleniyor...</p>
-      )}
+    <main>
+      
     </main>
   );
 }
