@@ -35,6 +35,7 @@ public class AuthController {
 
 
     @GetMapping("/test")
+    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<String> hello() {
         return new ResponseEntity<>("test", HttpStatus.OK);
     }

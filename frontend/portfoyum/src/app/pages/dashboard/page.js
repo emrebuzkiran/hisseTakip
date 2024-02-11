@@ -4,10 +4,11 @@ import Link from "next/link";
 import { jwtDecode } from "jwt-decode";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Sidebar, Menu, MenuItem, SubMenu } from "react-pro-sidebar";
+import Sidebar from "@/app/components/Sidebar";
+import isLogged from "@/app/components/isLogged";
 
 
-export default function Dashboard() {
+const Dashboard = () => {
   const [userInfo, setUserInfo] = useState(null);
   let rawToken = document.cookie;
   let token = rawToken.substring("jwt=".length);
@@ -19,8 +20,6 @@ export default function Dashboard() {
     const expirationDate = decoded.exp;
     const username = decoded.sub;
     
-
-
     if (currentTimestamp > expirationDate) {
       window.location.href = "/auth/login";
       return;
@@ -47,8 +46,14 @@ export default function Dashboard() {
   }, []);
 
   return (
-    <main>
-      
-    </main>
+    <div className="flex">
+      <Sidebar />
+      <div className="flex-1">
+        
+        <h1 className="text-2xl font-bold">Dashboard</h1>
+        
+      </div>
+    </div>
   );
 }
+export default isLogged(Dashboard);

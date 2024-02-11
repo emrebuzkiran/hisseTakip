@@ -1,0 +1,93 @@
+.sidebarWrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background-color: #000000;
+}
+
+.sidebarHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 2px solid #ffffff;
+}
+
+.sidebar {
+    width: 200px;
+    height: 100%;
+    background: #000000;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.menuItem {
+    border-bottom: 1px solid #ffffff;
+    cursor: pointer;
+    color: #000000;
+    /* Tüm metin renklerini siyah olarak ayarla */
+    text-decoration: none;
+}
+
+.hamburgerMenu {
+    cursor: pointer;
+    border: none;
+    padding: 10px 0;
+    margin-left: 10px;
+    background: none;
+    color: #000000;
+    /* Tüm metin renklerini siyah olarak ayarla */
+}
+
+.LogOutmenuItem {
+    border: 1px solid #ffffff;
+    cursor: pointer;
+    color: #000000;
+    /* Tüm metin renklerini siyah olarak ayarla */
+    text-decoration: none;
+    margin-top: 150%;
+}
+
+.menuItem:hover {
+    background: #ffffff;
+    transition: background-color 0.3s;
+    color: #000000;
+    /* Tüm metin renklerini siyah olarak ayarla */
+}
+
+.menuItem.active {
+    background-color: #ffffff;
+    transition: background-color 0.3s;
+    color: #000000;
+    /* Tüm metin renklerini siyah olarak ayarla */
+}
+
+.subMenuItem {
+    padding: 5px 5px;
+    border-bottom: 1px solid #ffffff;
+    cursor: pointer;
+    color: #000000;
+    /* Tüm metin renklerini siyah olarak ayarla */
+    text-decoration: none;
+}
+
+.subMenuItem:hover {
+    background-color: #ffffff;
+    color: #000000;
+    /* Tüm metin renklerini siyah olarak ayarla */
+}
+
+.subMenuItem.active {
+    background-color: #ffffff;
+    color: #000000;
+    /* Tüm metin renklerini siyah olarak ayarla */
+}
+
+.link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.link:hover {
+    text-decoration: underline;
+    color: #000000;
+    /* Tüm metin renklerini siyah olarak ayarla */
+}

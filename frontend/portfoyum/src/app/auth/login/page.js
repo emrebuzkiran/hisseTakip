@@ -12,29 +12,29 @@ export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
-  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await axios.post("http://localhost:8080/api/auth/login", {
-        username: username,
-        password: password,
+      const response = await axios.post(
+        "http://localhost:8080/api/auth/login",
+        {
+          username: username,
+          password: password,
+        }
+      );
 
-      });
-
-      const token = response.data;
+      const token = response.data.token; // Doğru token alanını alın
       document.cookie = `jwt=${token}`;
-      showSuccessToast("Başarıyla giriş yaptınız");    
-      
+      showSuccessToast("Başarıyla giriş yaptınız");
+
       router.push("/pages/dashboard");
     } catch (error) {
       console.error("Login error", error);
       showErrorToast("Kullanıcı adı veya şifre hatalı");
     }
   };
-
 
   function showSuccessToast(message) {
     showToast(message, "success");
@@ -57,7 +57,7 @@ export default function Login() {
 
   return (
     <main className="min-h-screen flex items-center justify-center">
-        <ToastContainer />
+      <ToastContainer />
       <div className="bg-white text-black   p-8 rounded shadow-md w-full sm:w-96">
         <h2 className="text-2xl font-bold mb-6">Login</h2>
         <form onSubmit={handleSubmit}>
@@ -100,7 +100,6 @@ export default function Login() {
           <button
             type="submit"
             className="w-full bg-black text-white p-2 rounded hover:bg-green-600 focus:outline-none focus:bg-green-600"
-            
           >
             Login
           </button>
