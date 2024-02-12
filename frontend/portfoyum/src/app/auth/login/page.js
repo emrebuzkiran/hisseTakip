@@ -25,11 +25,12 @@ export default function Login() {
         }
       );
 
-      const token = response.data.token; // Doğru token alanını alın
+      const token = response.data;
       document.cookie = `jwt=${token}`;
       showSuccessToast("Başarıyla giriş yaptınız");
-
       router.push("/pages/dashboard");
+
+      
     } catch (error) {
       console.error("Login error", error);
       showErrorToast("Kullanıcı adı veya şifre hatalı");

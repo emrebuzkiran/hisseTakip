@@ -6,44 +6,60 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import Sidebar from "@/app/components/Sidebar";
 import isLogged from "@/app/components/isLogged";
+import { useRouter } from "next/navigation";
 
 
 const Dashboard = () => {
   const [userInfo, setUserInfo] = useState(null);
-  let rawToken = document.cookie;
-  let token = rawToken.substring("jwt=".length);
-  const currentTimestamp = Math.floor(new Date().getTime() / 1000);
-  const decoded = jwtDecode(token);
+  const [loading, setLoading] = useState(true);
+  const router = useRouter();
+  // let rawToken = document.cookie;
+  // let token = rawToken.substring("jwt=".length);
+  // const currentTimestamp = Math.floor(new Date().getTime() / 1000);
+  // const decoded = jwtDecode(token);
   
   useEffect(() => {
+    // const expirationDate = decoded.exp;
+    // const username = decoded.sub;
+    const securePage = async () => {
+      const loggedin = await isLogged()
+      if (!loggedin){
+        console.log("User is not logged in");
+      }else{
+        setLoading(false);
+        console.log("User is logged in");
+        }
     
-    const expirationDate = decoded.exp;
-    const username = decoded.sub;
-    
-    if (currentTimestamp > expirationDate) {
-      window.location.href = "/auth/login";
-      return;
-    } else {
-      if (token) {
-        axios
-          .get(`http://localhost:8080/api/user/${username}`, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          })
-          .then((response) => {
+    // if (currentTimestamp > expirationDate) {
+    //   window.location.href = "/auth/login";
+    //   return;
+    // } else {
+    //   if (token) {
+    //     axios
+    //       .get(`http://localhost:8080/api/user/${username}`, {
+    //         headers: {
+    //           Authorization: `Bearer ${token}`,
+    //         },
+    //       })
+    //       .then((response) => {
 
-            setUserInfo(response.data);
-          })
-          .catch((error) => {
-            console.error(
-              "Kullanıcı bilgileri alınamadı. Token geçersiz olabilir."
-            );
-            console.error(error);
-          });
-      }
-    }
+    //         setUserInfo(response.data);
+    //       })
+    //       .catch((error) => {
+    //         console.error(
+    //           "Kullanıcı bilgileri alınamadı. Token geçersiz olabilir."
+    //         );
+    //         console.error(error);
+    //       });
+    //   }
+    // }
+        }
+    securePage();
   }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="flex">
@@ -56,4 +72,4 @@ const Dashboard = () => {
     </div>
   );
 }
-export default isLogged(Dashboard);
+export default Dashboard;

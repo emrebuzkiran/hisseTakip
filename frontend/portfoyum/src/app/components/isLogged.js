@@ -1,41 +1,37 @@
-import { useRouter } from "next/router";
+"use client";
 
-const isLogged = (WrappedComponent) => {
-  let token = document.cookie.substring("jwt=".length);
-  return (props) => {
-    const router = useRouter(); // Assuming access to router within the component
+import { jwtDecode } from "jwt-decode";
+import { useRouter } from "next/navigation";
 
-    const handleAuthentication = async () => {
-      try {
-        
-        
+const isLogged = async () => {
+  const rawToken = document.cookie;
+  const token = rawToken.substring("jwt=".length);
+  console.log(token);   
 
-        const response = await axios.post(
-          "http://localhost:8080/api/auth/test",
-          { token }
-        );
+  if (token) {
+    try {
+      const decoded = jwtDecode(token);
+      console.log(decoded);
+      const expirationDate = decoded.exp;
+      const currentTimestamp = Math.floor(new Date().getTime() / 1000);
 
-        if (response.data.isValid) {
-          // Authenticated, proceed with wrapped component
-          return <WrappedComponent {...props} />;
-        } else {
-          // Not authenticated, redirect
-          router.push("/auth/login");
-        }
-      } catch (error) {
-        console.error("Authentication error:", error);
-        // Handle errors gracefully (e.g., display error message)
+      if (currentTimestamp > expirationDate) {
+        return false; // Token süresi dolmuş
+        console.log("Token süresi dolmuş");
+      } else {
+        // Token geçerli görünüyor
+        console.log("Token geçerli görünüyor");
+        return true;
       }
-    };
-
-    // Use initial loading state or conditional rendering
-    return (
-      <div>
-        {/* Loading indicator or other content while authentication happens */}
-        {handleAuthentication()}
-      </div>
-    );
-  };
+    } catch (error) {
+      // Token geçersiz
+        console.error("Token geçersiz");
+      return false;
+    }
+  } else {
+    // Token yok
+    console.error("Token yok");
+    return false;
+  }
 };
-
 export default isLogged;
