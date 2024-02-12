@@ -1,35 +1,41 @@
-"use client";
-
 import { useRouter } from "next/router";
-import { useEffect } from "react";
-import axios from "axios";
 
 const isLogged = (WrappedComponent) => {
-  const Auth = (props) => {
-    const router = useRouter();
+  let token = document.cookie.substring("jwt=".length);
+  return (props) => {
+    const router = useRouter(); // Assuming access to router within the component
 
-    useEffect(() => {
-      let rawToken = document.cookie;
-      let token = rawToken.substring("jwt=".length);
+    const handleAuthentication = async () => {
+      try {
+        
+        
 
-      if (!token) {
-        router.push("/auth/login");
-      } else {
-        axios
-          .post("http://localhost:8080/api/auth/test", { token })
-          .then((response) => {
-            // Oturum geçerliyse, işlem devam edebilir
-          })
-          .catch((error) => {
-            router.push("/auth/login");
-          });
+        const response = await axios.post(
+          "http://localhost:8080/api/auth/test",
+          { token }
+        );
+
+        if (response.data.isValid) {
+          // Authenticated, proceed with wrapped component
+          return <WrappedComponent {...props} />;
+        } else {
+          // Not authenticated, redirect
+          router.push("/auth/login");
+        }
+      } catch (error) {
+        console.error("Authentication error:", error);
+        // Handle errors gracefully (e.g., display error message)
       }
-    }, [router]);
+    };
 
-    return <WrappedComponent {...props} />;
+    // Use initial loading state or conditional rendering
+    return (
+      <div>
+        {/* Loading indicator or other content while authentication happens */}
+        {handleAuthentication()}
+      </div>
+    );
   };
-
-  return Auth;
 };
 
 export default isLogged;
