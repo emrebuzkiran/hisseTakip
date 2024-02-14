@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 const isLogged = async () => {
   const rawToken = document.cookie;
   const token = rawToken.substring("jwt=".length);
-  console.log(token);   
+  console.log(token);
 
   if (token) {
     try {
@@ -16,8 +16,9 @@ const isLogged = async () => {
       const currentTimestamp = Math.floor(new Date().getTime() / 1000);
 
       if (currentTimestamp > expirationDate) {
-        return false; // Token süresi dolmuş
+        document.cookie = "jwt= ; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
         console.log("Token süresi dolmuş");
+        return false; // Token süresi dolmuş
       } else {
         // Token geçerli görünüyor
         console.log("Token geçerli görünüyor");
@@ -25,7 +26,7 @@ const isLogged = async () => {
       }
     } catch (error) {
       // Token geçersiz
-        console.error("Token geçersiz");
+      console.error("Token geçersiz");
       return false;
     }
   } else {

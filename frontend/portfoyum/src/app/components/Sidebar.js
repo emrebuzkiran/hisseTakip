@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { use, useState } from "react";
 import Link from "next/link";
 import { Sidebar, Menu, MenuItem, SubMenu } from "react-pro-sidebar";
 import styles from "./Sidebar.module.css";
@@ -12,9 +12,13 @@ import WorkIcon from "@mui/icons-material/Work";
 import SettingsIcon from "@mui/icons-material/Settings";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+import sidebarData from "./sidebarData";
+import { useRouter } from "next/navigation";
+
 
 const SidebarComponent = () => {
   const [collapsed, setCollapsed] = useState(false);
+  const router = useRouter();
 
   const toggleSidebar = () => {
     setCollapsed(!collapsed);
@@ -41,62 +45,48 @@ const SidebarComponent = () => {
           </div>
 
           <Menu>
-            <Link href="/dashboard" className={styles.link}>
-              <MenuItem icon={<HomeIcon />} className={styles.menuItem}>
-                Dashboard
-              </MenuItem>
-            </Link>
-            <SubMenu
-              label="Reports"
-              icon={<DashboardIcon />}
-              className={styles.menuItem}
-            >
-              <MenuItem
-                icon={<AssessmentIcon />}
-                className={styles.subMenuItem}
-              >
-                Overview
-              </MenuItem>
-              <MenuItem
-                icon={<AssessmentIcon />}
-                className={styles.subMenuItem}
-              >
-                Detailed Reports
-              </MenuItem>
-            </SubMenu>
+            {sidebarData?.map((item, index) => (
+              <React.Fragment key={index}>
+                {item.href ? (
+                  <Link href={item.href} className={styles.link}>
+                    <MenuItem icon={item.icon} className={styles.menuItem}>
+                      {item.label}
+                    </MenuItem>
+                  </Link>
+                ) : (
+                  <SubMenu
+                    label={item.label}
+                    icon={item.icon}
+                    className={styles.menuItem}
+                  >
+                    {item.subItems?.map((subItem, subIndex) => (
+                      
+                      <MenuItem
+                        key={subIndex}
+                        icon={subItem.icon}
+                        className={styles.subMenuItem}
+                        onClick={() => {
+                          router.push(subItem.href);
+                        }}
+                      >
+                        {subItem.label}
+                      </MenuItem>
+                    ))}
+                  </SubMenu>
+                )}
+              </React.Fragment>
+            ))}
+          </Menu>
 
-            <Link href="/projects" className={styles.link}>
-              <MenuItem icon={<WorkIcon />} className={styles.menuItem}>
-                Projects
-              </MenuItem>
-            </Link>
-            <MenuItem icon={<WorkIcon />} className={styles.menuItem}>
-              Tasks
-            </MenuItem>
-
-            <SubMenu
-              label="Settings"
-              icon={<SettingsIcon />}
-              className={styles.menuItem}
-            >
-              <MenuItem icon={<SettingsIcon />} className={styles.subMenuItem}>
-                <div className="flex items-center">
-                  <span>General</span>
-                </div>
-              </MenuItem>
-              <MenuItem
-                icon={<AccountCircleIcon />}
-                className={styles.subMenuItem}
-              >
-                <div className="flex items-center">
-                  <span>Profile</span>
-                </div>
-              </MenuItem>
-            </SubMenu>
-
+          <Menu>
             <MenuItem
               icon={<ExitToAppIcon />}
               className={styles.LogOutmenuItem}
+              //when clicked, log out the user
+              onClick={() => {
+                document.cookie = "jwt=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
+                router.push("/auth/login");
+              }}
             >
               Log out
             </MenuItem>

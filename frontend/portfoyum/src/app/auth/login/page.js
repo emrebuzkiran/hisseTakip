@@ -7,11 +7,29 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Cookies from "js-cookie";
+import { useEffect } from "react";
+import isLogged from "@/app/components/isLogged";
 
 export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(true);
   const router = useRouter();
+
+  useEffect(() => {
+    const securePage = async () => {
+      const loggedin = await isLogged();
+      setLoading(false);
+      if (loggedin) {
+        console.log("User is logged in");
+        router.push("/pages/dashboard");
+      } else {
+        console.log("User is not logged in");
+      }
+    };
+    securePage();
+  }, []);
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -54,6 +72,10 @@ export default function Login() {
       draggable: true,
       progress: undefined,
     });
+  }
+
+  if (loading) {
+    return <div>Loading...</div>;
   }
 
   return (
@@ -107,7 +129,7 @@ export default function Login() {
         </form>
         <p className="mt-4 text-sm text-gray-600">
           Don't have an account?
-          <Link href="/register" className="text-blue-500 hover:underline ml-1">
+          <Link href="/auth/register" className="text-blue-500 hover:underline ml-1">
             Register
           </Link>
         </p>

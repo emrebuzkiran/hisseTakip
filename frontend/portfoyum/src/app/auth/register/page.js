@@ -4,11 +4,14 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Link from "next/link";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 export default function Register() {
   const [firstName, setFirstName] = useState("");
   const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const router = useRouter();
 
   const handleSubmit = async (e) => {
     const nameRegex = /^[a-zA-ZğüşıöçĞÜŞİÖÇ]+$/; // Accepts only letters
@@ -29,13 +32,14 @@ export default function Register() {
         "http://localhost:8080/api/auth/register",
         {
           name: firstName,
-          username: lastName,
+          username: username,
           email: email,
           password: password,
           authorities: ["ROLE_USER"],
         }
       );
       toast.success("Registration successful!");
+      router.push("/auth/login");
     } catch (error) {
       toast.error("Registration failed!");
       console.error(error);
@@ -70,14 +74,14 @@ export default function Register() {
               htmlFor="lastName"
               className="block text-gray-700 text-sm font-bold mb-2"
             >
-              Last Name
+              Username
             </label>
             <input
               type="text"
               id="username"
               name="username"
               value={username}
-              onChange={(e) => setLastName(e.target.value)}
+              onChange={(e) => setUsername(e.target.value)}
               className="w-full px-4 py-2 border rounded focus:outline-none focus:border-blue-500"
               placeholder="Your username"
               required
@@ -128,7 +132,7 @@ export default function Register() {
         </form>
         <p className="mt-4 text-sm text-gray-600">
           Already have an account?
-          <Link href="/login" className="text-blue-500 hover:underline ml-1">
+          <Link href="/auth/login" className="text-blue-500 hover:underline ml-1">
             Login
           </Link>
         </p>
