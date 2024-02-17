@@ -1,7 +1,8 @@
 "use client";
 
-import Sidebar from "@/app/components/Sidebar";
+import Sidebar from "@/app/components/CustomSidebar";
 import { useEffect, useState } from "react";
+import { Select, Option } from "@material-tailwind/react";
 import axios from "axios";
 
 export default function Ekle() {
@@ -27,18 +28,24 @@ export default function Ekle() {
   };
 
   return (
-    <div className="flex">
-      <Sidebar />
-      <div className="collapse-box">
-        <select value={secilenHisse} onChange={handleChange}>
-          <option value="">Hisse Seçin</option>
-          {hisseListesi.map((hisse) => (
-            <option key={hisse.kod} value={hisse.kod}>
-              {hisse.adi}
-            </option>
-          ))}
-        </select>
+    <>
+      <div class="fixed left-0 top-0 h-full">
+        <Sidebar />
       </div>
-    </div>
+
+      <div className="flex justify-center items-center h-screen mt-0">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold mb-4">
+            Select Box Sayfanın Ortasında ve Üstünde
+          </h1>
+          <select className="p-2 text-black">
+            <option value="volvo">Volvo</option>
+            <option value="saab">Saab</option>
+            <option value="mercedes">Mercedes</option>
+            <option value="audi">Audi</option>
+          </select>
+        </div>
+      </div>
+    </>
   );
 }

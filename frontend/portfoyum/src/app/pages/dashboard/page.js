@@ -4,7 +4,7 @@ import Link from "next/link";
 import { jwtDecode } from "jwt-decode";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import Sidebar from "@/app/components/Sidebar";
+import Sidebar from "@/app/components/CustomSidebar";
 import isLogged from "@/app/components/isLogged";
 import { useRouter } from "next/navigation";
 
