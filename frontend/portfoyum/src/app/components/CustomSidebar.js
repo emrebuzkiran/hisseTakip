@@ -1,19 +1,13 @@
 "use client";
-import React, { use, useState } from "react";
 import Link from "next/link";
-import { Sidebar, Menu, MenuItem, SubMenu } from "react-pro-sidebar";
+import React, { useState } from "react";
+import { Menu, MenuItem, Sidebar, SubMenu } from "react-pro-sidebar";
 import styles from "./Sidebar.module.css";
 
-import HomeIcon from "@mui/icons-material/Home";
-import DashboardIcon from "@mui/icons-material/Dashboard";
-import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
-import AssessmentIcon from "@mui/icons-material/Assessment";
-import WorkIcon from "@mui/icons-material/Work";
-import SettingsIcon from "@mui/icons-material/Settings";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
-import sidebarData from "./sidebarData";
+import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
 import { useRouter } from "next/navigation";
+import sidebarData from "./sidebarData";
 
 
 const SidebarComponent = () => {

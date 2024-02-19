@@ -1,31 +1,39 @@
 "use client";
 
 import Sidebar from "@/app/components/CustomSidebar";
-import { useEffect, useState } from "react";
-import { Select, Option } from "@material-tailwind/react";
 import axios from "axios";
+import { useEffect, useState } from "react";
 
 export default function Ekle() {
   const [hisseListesi, setHisseListesi] = useState([]);
   const [secilenHisse, setSecilenHisse] = useState("");
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
       try {
         const response = await axios.get(
-          "https://bigpara.hurriyet.com.tr/api/v1/hisse/list"
+          "https://doviz-api.onrender.com/api/borsaAll"
         );
-        setHisseListesi(response.data);
+
+        // Hisse adlarını al
+        const hisseAdlari = response.data.data.map((hisse) => hisse.Name[0]);
+        setHisseListesi(hisseAdlari);
       } catch (error) {
         console.error("Veri alınamadı:", error);
       }
     }
     fetchData();
-  }, []);
+    setIsMounted(true);
+  }, []); 
 
   const handleChange = (e) => {
     setSecilenHisse(e.target.value);
   };
+
+  if (!isMounted) {
+    return null;
+  }
 
   return (
     <>
@@ -33,16 +41,18 @@ export default function Ekle() {
         <Sidebar />
       </div>
 
-      <div className="flex justify-center items-center h-screen mt-0">
+      <div className="flex justify-center items-center ">
         <div className="text-center">
           <h1 className="text-2xl font-bold mb-4">
-            Select Box Sayfanın Ortasında ve Üstünde
+            Hisse Seçiniz...
           </h1>
-          <select className="p-2 text-black">
-            <option value="volvo">Volvo</option>
-            <option value="saab">Saab</option>
-            <option value="mercedes">Mercedes</option>
-            <option value="audi">Audi</option>
+          <select className="p-2 text-black" onChange={handleChange} value={secilenHisse}>
+            <option value="">Seçiniz...</option>
+            {hisseListesi.map((hisse, index) => (
+              <option key={index} value={hisse}>
+                {hisse}
+              </option>
+            ))}
           </select>
         </div>
       </div>
