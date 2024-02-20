@@ -11,7 +11,7 @@ import sidebarData from "./sidebarData";
 
 
 const SidebarComponent = () => {
-  const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, setCollapsed] = useState(true);
   const router = useRouter();
 
   const toggleSidebar = () => {
