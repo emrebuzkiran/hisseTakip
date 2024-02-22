@@ -1,5 +1,6 @@
 package com.example.portfoyum.entity;
 
+import com.example.portfoyum.dto.HisseDTO;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,7 +16,10 @@ import java.util.Set;
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JoinTable(name = "hisse", joinColumns = @JoinColumn(name = "user_id"))
+    @Column(name = "user_id", nullable = false)
     private Long id;
+
     private String name;
     private String username;
     private String password;
@@ -31,5 +35,6 @@ public class User implements UserDetails {
     @Column(name = "role", nullable = false)
     @Enumerated(EnumType.STRING)
     private Set<Role> authorities;
+
 
 }

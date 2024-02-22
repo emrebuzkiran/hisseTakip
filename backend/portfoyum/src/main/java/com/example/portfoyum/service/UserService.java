@@ -1,9 +1,11 @@
 package com.example.portfoyum.service;
 
 
+import com.example.portfoyum.dto.HisseDTO;
 import com.example.portfoyum.dto.SignupDTO;
 import com.example.portfoyum.dto.UserDTO;
 import com.example.portfoyum.entity.User;
+import com.example.portfoyum.repository.HisseRepository;
 import com.example.portfoyum.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,10 +20,12 @@ import java.util.Optional;
 public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
+    private final HisseRepository hisseRepository;
     private final BCryptPasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository, HisseRepository hisseRepository, BCryptPasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.hisseRepository = hisseRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
