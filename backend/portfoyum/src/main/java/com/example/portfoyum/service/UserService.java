@@ -46,7 +46,6 @@ public class UserService implements UserDetailsService {
     }
 
     public User createUser(SignupDTO request) {
-
         User newUser = User.builder()
                 .name(request.name())
                 .username(request.username())

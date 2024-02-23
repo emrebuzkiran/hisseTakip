@@ -6,6 +6,10 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useEffect, useState } from "react";
+import getUserData from "@/app/components/getUserData";
+import { jwtDecode } from "jwt-decode";
+
+
 
 export default function Ekle() {
   const [hisseListesi, setHisseListesi] = useState([]);
@@ -13,6 +17,11 @@ export default function Ekle() {
   const [maliyet, setMaliyet] = useState("");
   const [miktar, setMiktar] = useState("");
   const [isMounted, setIsMounted] = useState(false);
+  const [userData , setUserData] = useState(null);
+
+  const rawToken = document.cookie;
+  const token = rawToken.substring("jwt=".length);
+  
 
   useEffect(() => {
     async function fetchData() {
@@ -25,6 +34,10 @@ export default function Ekle() {
         console.log(data);
         const hisseler = data.data.map((hisse) => ({ name: hisse.name, price: hisse.price }));
         setHisseListesi(hisseler);
+
+        const userData = await getUserData();
+        setUserData(userData);
+
       } catch (error) {
         console.error("Veri alınamadı:", error);
       }
@@ -52,12 +65,44 @@ export default function Ekle() {
     setMiktar(miktar);
   };
 
-  const handleEkle = () => {
+  const handleEkle = async() => {
+
+    try {
+      // Örnek kullanıcı ID'si ve diğer bilgiler
+      const user_id = userData.id;
+      const hisse_ad = secilenHisse.name;
+      const fiyat = parseFloat(secilenHisse.price.replace(",", "."));
+      const maliyet_degeri = parseFloat(maliyet.replace(",", "."));
+      const miktar_degeri = miktar;
+
+      const data = {
+        user_id,
+        hisse_ad,
+        fiyat,
+        maliyet: maliyet_degeri,
+        miktar: miktar_degeri,
+      };
+
+      const response = await axios.post(
+        "http://localhost:8080/api/hisse/add",
+        data,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log(response.data);
+    } catch (error) {
+      console.error("Hisse eklenirken bir hata oluştu:", error);
+    }
     // Ekleme işlemini gerçekleştir
     console.log("Seçilen Hisse:", secilenHisse.name);
     console.log("Fiyat:", secilenHisse.price);
     console.log("Maliyet:", maliyet);
     console.log("Miktar:", miktar);
+
+
 
     setSecilenHisse("");
     setMaliyet("");

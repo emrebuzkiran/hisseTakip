@@ -13,7 +13,15 @@ public class HisseService {
         this.hisseRepository = hisseRepository;
     }
 
-    public void addHisse(HisseDTO hisseDTO) {
-        hisseRepository.save(new Hisse(hisseDTO.hissead(), hisseDTO.fiyat(), hisseDTO.miktar(), hisseDTO.maliyet()));
+    public Hisse createHisse(HisseDTO request) {
+        Hisse newHisse = Hisse.builder()
+                .user_id(request.user_id())
+                .hisse_ad(request.hisse_ad())
+                .fiyat(request.fiyat())
+                .miktar(request.miktar())
+                .maliyet(request.maliyet())
+                .build();
+
+        return hisseRepository.save(newHisse);
     }
 }

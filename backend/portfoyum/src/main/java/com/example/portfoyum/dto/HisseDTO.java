@@ -1,6 +1,6 @@
 package com.example.portfoyum.dto;
 
-public record HisseDTO(String hissead,long fiyat,long miktar,long maliyet) {
+public record HisseDTO(long user_id, String hisse_ad,float fiyat,long miktar,float maliyet) {
 
 
 }

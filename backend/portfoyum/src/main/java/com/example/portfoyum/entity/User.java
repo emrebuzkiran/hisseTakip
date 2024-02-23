@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -16,8 +17,6 @@ import java.util.Set;
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JoinTable(name = "hisse", joinColumns = @JoinColumn(name = "user_id"))
-    @Column(name = "user_id", nullable = false)
     private Long id;
 
     private String name;

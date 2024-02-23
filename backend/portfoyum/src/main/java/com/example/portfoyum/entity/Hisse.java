@@ -16,19 +16,19 @@ import org.springframework.security.core.userdetails.UserDetails;
 public class Hisse  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long varlikid;
+    private long id;
+
 
     private long user_id;
 
-
-    private String hissead;
-    private long fiyat;
+    private String hisse_ad;
+    private float fiyat;
     private long miktar;
-    private long maliyet;
+    private float maliyet;
 
-
-    public Hisse(String hissead, long fiyat, long miktar, long maliyet) {
-        this.hissead = hissead;
+    public Hisse(long user_id, String hisse_ad, long fiyat, long miktar, long maliyet) {
+        this.user_id = user_id;
+        this.hisse_ad = hisse_ad;
         this.fiyat = fiyat;
         this.miktar = miktar;
         this.maliyet = maliyet;
