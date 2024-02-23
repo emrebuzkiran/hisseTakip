@@ -9,19 +9,16 @@ import { useEffect, useState } from "react";
 import getUserData from "@/app/components/getUserData";
 import { jwtDecode } from "jwt-decode";
 
-
-
 export default function Ekle() {
   const [hisseListesi, setHisseListesi] = useState([]);
-  const [secilenHisse, setSecilenHisse] = useState('');
+  const [secilenHisse, setSecilenHisse] = useState("");
   const [maliyet, setMaliyet] = useState("");
   const [miktar, setMiktar] = useState("");
   const [isMounted, setIsMounted] = useState(false);
-  const [userData , setUserData] = useState(null);
+  const [userData, setUserData] = useState(null);
 
   const rawToken = document.cookie;
   const token = rawToken.substring("jwt=".length);
-  
 
   useEffect(() => {
     async function fetchData() {
@@ -32,12 +29,14 @@ export default function Ekle() {
         );
         const data = await response.json();
         console.log(data);
-        const hisseler = data.data.map((hisse) => ({ name: hisse.name, price: hisse.price }));
+        const hisseler = data.data.map((hisse) => ({
+          name: hisse.name,
+          price: hisse.price,
+        }));
         setHisseListesi(hisseler);
 
         const userData = await getUserData();
         setUserData(userData);
-
       } catch (error) {
         console.error("Veri alınamadı:", error);
       }
@@ -48,7 +47,9 @@ export default function Ekle() {
 
   const handleChange = (e) => {
     const secilenHisse = e.target.value;
-    const secilenHisseDetaylari = hisseListesi.find((hisse) => hisse.name === secilenHisse);
+    const secilenHisseDetaylari = hisseListesi.find(
+      (hisse) => hisse.name === secilenHisse
+    );
     if (secilenHisseDetaylari) {
       const { name, price } = secilenHisseDetaylari;
       setSecilenHisse({ name, price });
@@ -65,8 +66,7 @@ export default function Ekle() {
     setMiktar(miktar);
   };
 
-  const handleEkle = async() => {
-
+  const handleEkle = async () => {
     try {
       // Örnek kullanıcı ID'si ve diğer bilgiler
       const user_id = userData.id;
@@ -102,8 +102,6 @@ export default function Ekle() {
     console.log("Maliyet:", maliyet);
     console.log("Miktar:", miktar);
 
-
-
     setSecilenHisse("");
     setMaliyet("");
     setMiktar("");
@@ -132,7 +130,7 @@ export default function Ekle() {
 
   return (
     <>
-    <ToastContainer />
+      <ToastContainer />
       <div class="fixed left-0 top-0 h-full">
         <Sidebar />
       </div>
@@ -157,8 +155,8 @@ export default function Ekle() {
 
       <div className="flex justify-center mt-8">
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg max-w-screen-fit">
-          <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+          <table className="w-full text-sm text-left rtl:text-right text-dark ">
+            <thead class="text-xs text-black uppercase bg-white dark:bg-white ">
               <tr>
                 <th scope="col" class="px-6 py-3">
                   Hisse adı
@@ -178,17 +176,17 @@ export default function Ekle() {
               </tr>
             </thead>
             <tbody>
-              <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+              <tr class="bg-white border-b dark:bg-white dark:border-dark">
                 <th
                   scope="row"
-                  class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                  class="px-6 py-4 font-medium text-dark whitespace-nowrap dark:text-black"
                 >
                   {secilenHisse.name}
                 </th>
-                <td class="px-6 py-4 text-gray-500 whitespace-nowrap dark:text-gray-400">
+                <td class="px-6 py-4 text-dark whitespace-nowrap dark:text-black">
                   {secilenHisse.price}
                 </td>
-                <td class="px-6 py-4 text-gray-500 whitespace-nowrap dark:text-gray-400">
+                <td class="px-6 py-4 text-dark whitespace-nowrap dark:text-black">
                   <input
                     type="text"
                     className="p-2 text-black"
@@ -197,7 +195,7 @@ export default function Ekle() {
                     onChange={handleMaliyetChange}
                   />
                 </td>
-                <td class="px-6 py-4 text-gray-500 whitespace-nowrap dark:text-gray-400">
+                <td class="px-6 py-4 text-dark whitespace-nowrap dark:text-gray-400">
                   <input
                     type="text"
                     className="p-2 text-black"
@@ -207,7 +205,10 @@ export default function Ekle() {
                   />
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                  <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={handleEkle}>
+                  <button
+                    className="bg-blue-500 hover:bg-green-500 text-white font-bold py-2 px-4 rounded"
+                    onClick={handleEkle}
+                  >
                     Ekle
                   </button>
                 </td>
@@ -217,4 +218,5 @@ export default function Ekle() {
         </div>
       </div>
     </>
-  );}
+  );
+}
