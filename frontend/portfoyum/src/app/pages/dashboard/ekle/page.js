@@ -96,7 +96,6 @@ export default function Ekle() {
     } catch (error) {
       console.error("Hisse eklenirken bir hata oluştu:", error);
     }
-    // Ekleme işlemini gerçekleştir
     console.log("Seçilen Hisse:", secilenHisse.name);
     console.log("Fiyat:", secilenHisse.price);
     console.log("Maliyet:", maliyet);
@@ -106,7 +105,6 @@ export default function Ekle() {
     setMaliyet("");
     setMiktar("");
     showSuccessToast("Hisse başarıyla eklendi");
-    // Burada isteğe bağlı olarak, verileri bir API'ye gönderebilir veya başka bir işlem yapabilirsiniz.
   };
 
   function showSuccessToast(message) {
