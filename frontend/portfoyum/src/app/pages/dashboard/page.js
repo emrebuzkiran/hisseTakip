@@ -7,72 +7,41 @@ import { useEffect, useState } from "react";
 import Sidebar from "@/app/components/CustomSidebar";
 import isLogged from "@/app/components/isLogged";
 import { useRouter } from "next/navigation";
+import Chart from "chart.js/auto";
 
 
 const Dashboard = () => {
   const [loading, setLoading] = useState(true);
   const router = useRouter();
-  
+
   useEffect(() => {
     const securePage = async () => {
-      const loggedin = await isLogged()
-      if (!loggedin){
+      const loggedin = await isLogged();
+      if (!loggedin) {
         console.log("User is not logged in");
         router.push("/auth/login");
-      }else{
+      } else {
         setLoading(false);
         console.log("User is logged in");
-        }
-    
-        }
-var ctx = document.getElementById("myChart");
-    if (ctx && ctx.chart) {
-      // If there is, destroy it
-      ctx.chart.destroy();
-    }
-    var myChart = new Chart(ctx, {
-      type: "line",
-      data: {
-        labels: ["a", "b", "c", "d", "e", "f", "g", "h"],
-        datasets: [
-          {
-            data: [
-              //very waves data
-              0, 45, 27, 35, 19, 65, 37, 100,
-            ],
-            label: "BTC",
-            fill: false,
-            pointStyle: "circle",
-            pointRadius: 10,
-            cubicInterpolationMode: "monotone",
-            borderColor: "rgb(255,255,255)",
-            backgroundColor: "rgb(0,0,0,0.1)",
-          },
-        ],
-      },
-      options: {
-        
-        maintainAspectRatio: false,
-        plugins: {
-          legend: false, // Hide legend
-        },
-        scales: {
-          y: {
-            display: false, // Hide Y axis labels
-          },
-          x: {
-            display: false, // Hide X axis labels
-          },
-        },
-      }});
-    securePage();
-    return () => {
-      if (myChart) {
-        myChart.destroy();
       }
     };
+    const ctx = document.getElementById('myChart');
+        new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+            datasets: [{
+              label: 'My First Dataset',
+              data: [65, 59, 80, 81, 56, 55, 40],
+              fill: false,
+              borderColor: 'rgb(75, 192, 192)',
+              tension: 0.1
+            }]
+          }
+        });
+      
+    securePage();
   }, []);
-
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -82,13 +51,9 @@ var ctx = document.getElementById("myChart");
       <Sidebar />
       <div className="flex-1">
         <h1 className="text-2xl font-bold">Dashboard</h1>
-      </div>
-      <div className="w-screen h-fit my-auto mb-0  shadow-xl z-0">
-        <div className="absolute top-0 left-0 w-full h-full">
-          <canvas id="myChart"></canvas>
-        </div>
+        <canvas id="myChart" width="400" height="400"></canvas>
       </div>
     </div>
   );
-}
+};
 export default Dashboard;
