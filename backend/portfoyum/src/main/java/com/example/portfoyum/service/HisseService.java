@@ -24,4 +24,8 @@ public class HisseService {
 
         return hisseRepository.save(newHisse);
     }
+
+    public Hisse getHisse (long user_id){
+        return hisseRepository.findByUserId(user_id);
+    }
 }

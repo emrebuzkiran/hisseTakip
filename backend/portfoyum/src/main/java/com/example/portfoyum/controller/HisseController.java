@@ -27,4 +27,15 @@ public class HisseController {
     public String test() {
         return "test";
     }
+
+    @GetMapping("/{user_id}")
+    @CrossOrigin(origins = "http://localhost:3000")
+    public ResponseEntity<Hisse> getHisse(@PathVariable long user_id) {
+        Hisse hisse = hisseService.getHisse(user_id);
+        if (hisse != null) {
+            return ResponseEntity.ok(hisse);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+    }
 }

@@ -8,4 +8,5 @@ import org.springframework.stereotype.Repository;
 public interface HisseRepository extends JpaRepository<Hisse, Long> {
 
 
+    Hisse findByUserId(long userId);
 }
