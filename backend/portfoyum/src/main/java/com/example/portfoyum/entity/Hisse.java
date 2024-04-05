@@ -20,16 +20,16 @@ public class Hisse  {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-
-    private long user_id;
+    @Column(name = "user_id")
+    private long userId;
 
     private String hisse_ad;
     private float fiyat;
     private long miktar;
     private float maliyet;
 
-    public Hisse(long user_id, String hisse_ad, long fiyat, long miktar, long maliyet) {
-        this.user_id = user_id;
+    public Hisse(long userId, String hisse_ad, long fiyat, long miktar, long maliyet) {
+        this.userId = userId;
         this.hisse_ad = hisse_ad;
         this.fiyat = fiyat;
         this.miktar = miktar;

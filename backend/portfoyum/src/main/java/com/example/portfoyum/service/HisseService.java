@@ -5,6 +5,8 @@ import com.example.portfoyum.entity.Hisse;
 import com.example.portfoyum.repository.HisseRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class HisseService {
     private final HisseRepository hisseRepository;
@@ -15,7 +17,7 @@ public class HisseService {
 
     public Hisse createHisse(HisseDTO request) {
         Hisse newHisse = Hisse.builder()
-                .user_id(request.user_id())
+                .userId(request.user_id())
                 .hisse_ad(request.hisse_ad())
                 .fiyat(request.fiyat())
                 .miktar(request.miktar())
@@ -25,7 +27,8 @@ public class HisseService {
         return hisseRepository.save(newHisse);
     }
 
-    public Hisse getHisse (long user_id){
-        return hisseRepository.findByUserId(user_id);
+    public List<Hisse> getHisseByUserId(long userId) {
+        return hisseRepository.findAllByUserId(userId);
     }
+
 }

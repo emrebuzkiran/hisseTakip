@@ -1,15 +1,9 @@
 "use client";
 
-import Link from "next/link";
-import { jwtDecode } from "jwt-decode";
-import axios from "axios";
-import { useEffect, useState } from "react";
 import Sidebar from "@/app/components/CustomSidebar";
-import isLogged from "@/app/components/isLogged";
 import { useRouter } from "next/navigation";
-import Chart from "chart.js/auto";
+import { useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
-import { Height } from "@mui/icons-material";
 
 const test = () => {
   const [loading, setLoading] = useState(false);

@@ -7,6 +7,7 @@ async function getUserData() {
     const token = rawToken.substring("jwt=".length);
     const decoded = jwtDecode(token);
     const username = decoded.sub;
+    
 
     const response = await axios.get(
       `http://localhost:8080/api/user/${username}`,

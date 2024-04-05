@@ -1,18 +1,21 @@
 "use client";
 
-import Link from "next/link";
-import { jwtDecode } from "jwt-decode";
-import axios from "axios";
-import { useEffect, useState } from "react";
 import Sidebar from "@/app/components/CustomSidebar";
 import isLogged from "@/app/components/isLogged";
+import axios from "axios";
 import { useRouter } from "next/navigation";
-import Chart from "chart.js/auto";
+import { use, useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
+import Chart from "chart.js/auto";
+import getUserData from "@/app/components/getUserData";
+import { getTokenData } from "@/app/components/cookie";
 
 
 const Dashboard = () => {
   const [loading, setLoading] = useState(true);
+  const [userData, setUserData] = useState(null);
+  const [response, setResponse] = useState([]);
+  const {token} = getTokenData();
   const router = useRouter();
 
   useEffect(() => {
@@ -25,11 +28,37 @@ const Dashboard = () => {
         setLoading(false);
         console.log("User is logged in");
       }
-    };
-    
+    };    
     securePage();
 
   }, []);
+
+  useEffect(() => {
+    const getStockData = async () => {
+      try{
+
+        const userData = await getUserData();
+        setUserData(userData.data);
+        console.log(userData.id);
+        
+        const response = await axios.get(
+          `http://localhost:8080/api/hisse/get/${userData.id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        console.log(response.data);
+        setResponse(response.data);
+      } catch (error) {
+        console.error(error);
+      }};
+
+    getStockData();
+
+  }, []);
+
 
   const labels = ["January", "February", "March", "April", "May", "June"];
   const data = {
@@ -76,6 +105,17 @@ const Dashboard = () => {
                   <th className="px-4 py-2 border">Kazanç</th>
                 </tr>
               </thead>
+              <tbody>
+                {response.map((item, index) => (
+                  <tr key={index}>
+                    <td className="px-4 py-2 border">{item.hisse_ad}</td>
+                    <td className="px-4 py-2 border">{item.fiyat}</td>
+                    <td className="px-4 py-2 border">{item.miktar}</td>
+                    <td className="px-4 py-2 border">{item.maliyet}</td>
+                    <td className="px-4 py-2 border"></td>
+                  </tr>
+                ))}
+              </tbody>
             </table>
           </div>
         </div>

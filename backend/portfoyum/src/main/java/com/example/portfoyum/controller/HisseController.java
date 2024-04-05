@@ -5,8 +5,9 @@ import com.example.portfoyum.entity.Hisse;
 import com.example.portfoyum.service.HisseService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/hisse")
@@ -28,14 +29,16 @@ public class HisseController {
         return "test";
     }
 
-    @GetMapping("/{user_id}")
+    @GetMapping("/get/{user_id}")
     @CrossOrigin(origins = "http://localhost:3000")
-    public ResponseEntity<Hisse> getHisse(@PathVariable long user_id) {
-        Hisse hisse = hisseService.getHisse(user_id);
-        if (hisse != null) {
-            return ResponseEntity.ok(hisse);
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        }
+    public List<Hisse> getHisseByUserId(@PathVariable long user_id) {
+     List<Hisse> hisseList = hisseService.getHisseByUserId(user_id);
+     if (hisseList.isEmpty()) {
+         return null;
+     }
+        return hisseList;
     }
+
+
 }
+
