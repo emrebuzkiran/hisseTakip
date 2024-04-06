@@ -91,32 +91,36 @@ const Dashboard = () => {
           <Sidebar />
         </div>
         <div className="flex justify-center items-center flex-grow">
-          <div className="shadow-md rounded my-6 px-8 py-8">
-            <div className="h-60 w-96">
+          <div className=" my-6 px-8 py-8">
+            <div className="" style={{ height: "400px", width: "750px" }}>
               <Line data={data} />
             </div>
-            <table className="table-auto border divide-x-2">
-              <thead>
-                <tr>
-                  <th className="px-4 py-2 border">Hisse</th>
-                  <th className="px-4 py-2 border">Fiyat</th>
-                  <th className="px-4 py-2 border">Miktar</th>
-                  <th className="px-4 py-2 border">Maliyet</th>
-                  <th className="px-4 py-2 border">Kazanç</th>
-                </tr>
-              </thead>
-              <tbody>
-                {response.map((item, index) => (
-                  <tr key={index}>
-                    <td className="px-4 py-2 border">{item.hisse_ad}</td>
-                    <td className="px-4 py-2 border">{item.fiyat}</td>
-                    <td className="px-4 py-2 border">{item.miktar}</td>
-                    <td className="px-4 py-2 border">{item.maliyet}</td>
-                    <td className="px-4 py-2 border"></td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+            <div className="flex justify-center items-center flex-grow">
+              <div className="rounded-lg border shadow-2xl overflow-hidden">
+                <table className="min-w-max">
+                  <thead>
+                    <tr>
+                      <th className="px-4 py-2 border bg-gray-600">Hisse</th>
+                      <th className="px-4 py-2 border bg-gray-600">Fiyat</th>
+                      <th className="px-4 py-2 border bg-gray-600">Miktar</th>
+                      <th className="px-4 py-2 border bg-gray-600">Maliyet</th>
+                      <th className="px-4 py-2 border bg-gray-600">Kazanç</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {response.map((item, index) => (
+                      <tr key={index}>
+                        <td className="px-4 py-2 border">{item.hisse_ad}</td>
+                        <td className="px-4 py-2 border">{item.fiyat}</td>
+                        <td className="px-4 py-2 border">{item.miktar}</td>
+                        <td className="px-4 py-2 border">{item.maliyet}</td>
+                        <td className="px-4 py-2 border"></td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
           </div>
         </div>
       </div>

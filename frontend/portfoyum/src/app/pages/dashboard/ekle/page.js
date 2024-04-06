@@ -95,6 +95,7 @@ export default function Ekle() {
       console.log(response.data);
     } catch (error) {
       console.error("Hisse eklenirken bir hata oluştu:", error);
+      showErrorToast("Hisse eklenirken bir hata oluştu");
     }
     console.log("Seçilen Hisse:", secilenHisse.name);
     console.log("Fiyat:", secilenHisse.price);
@@ -109,6 +110,9 @@ export default function Ekle() {
 
   function showSuccessToast(message) {
     showToast(message, "success");
+  }
+  function showErrorToast(message) {
+    showToast(message, "error");
   }
   function showToast(message, type) {
     toast[type](message, {
